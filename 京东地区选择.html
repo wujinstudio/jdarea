@@ -142,7 +142,16 @@ let vue=new Vue({
                         { name: "请选择", sub: [] },
                         {
                             name: "北京",
-                            sub: [{ name: "请选择" }, { name: "东城区" }, { name: "西城区" }, { name: "崇文区" }, { name: "宣武区" }, { name: "朝阳区" }, { name: "海淀区" }, { name: "丰台区" }, { name: "石景山区" }, { name: "房山区" }, { name: "通州区" }, { name: "顺义区" }, { name: "昌平区" }, { name: "大兴区" }, { name: "怀柔区" }, { name: "平谷区" }, { name: "门头沟区" }, { name: "密云县" }, { name: "延庆县" }, { name: "其他" }],
+                            sub: [
+                                { name: "请选择" }, 
+                                {name: "东城区" ,
+                                    sub:[{ name: "请选择" }, {name:"东华门街道办事处"},{name:"景山街道办事处"},{name:"交道口街道办事处"},{name:"安定门街道办事处"},{name:"北新桥街道办事处"},{name:"东四街道办事处"},{name:"朝阳门街道办事处"},{name:"建国门街道办事处"},{name:"东直门街道办事处"},{name:"和平里街道办事处"},{name:"城北街道办事处"},{name:"兴丰街道办事处"},{name:"泉河街道办事处"},{name:"滨河街道办事处"},{name:"鼓楼街道办事处"},{name:"百泉街道办事处"}],
+                                    type: 2
+                                },
+                                { name: "西城区" ,
+                                    sub:[{ name: "请选择" }, {name: "西长安街街道办事处"},{name:"西长安街街道办事处"},{name:"建外街道办事处"},{name:"右安门街道办事处"},{name:"八宝山街道办事处"},{name:"万寿路街道办事处"},{name:"大峪街道办事处"},{name:"城关街道办事处"},{name:"中仓街道办事处"},{name:"胜利街道办事处"},{name:"城北街道办事处"},{name:"兴丰街道办事处"},{name:"泉河街道办事处"},{name:"滨河街道办事处"},{name:"鼓楼街道办事处"},{name:"百泉街道办事处"}],    
+                                    
+                                }, { name: "崇文区" }, { name: "宣武区" }, { name: "朝阳区" }, { name: "海淀区" }, { name: "丰台区" }, { name: "石景山区" }, { name: "房山区" }, { name: "通州区" }, { name: "顺义区" }, { name: "昌平区" }, { name: "大兴区" }, { name: "怀柔区" }, { name: "平谷区" }, { name: "门头沟区" }, { name: "密云县" }, { name: "延庆县" }, { name: "其他" }],
                             type: 0
                         }], type: 1
                 },
@@ -2156,7 +2165,14 @@ let vue=new Vue({
                 three:false
             }
         },
+        beforeMount() {
+            this.get();
+        },
     methods:{
+        get:function(){
+                let date=localStorage.getItem("temp");
+                this.please=date;
+            },
         change(){
             this.show=true;
             this.hide=true;
@@ -2218,6 +2234,7 @@ let vue=new Vue({
             this.area=newarea;
             this.nowarea_index=index;
             this.please=this.prov+this.city+this.area;
+            localStorage.setItem("temp",this.please);
             this.show=false;
             this.hide=false;
         },
@@ -2238,7 +2255,12 @@ let vue=new Vue({
             this.upload=true;
             this.area=''
         }
-    },  
+    },
+    watch: {
+            get() {
+                this.get();
+            },
+        }  
 })
 </script>
 
