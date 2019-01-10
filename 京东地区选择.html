@@ -112,7 +112,7 @@
 <body>
     <div id="area">
         <div class="bigbox">
-            <div class="box" @mouseenter="change" @mouseleave="out"><p :class='{border:hide}'>{{please}}</p>
+            <div class="box" @mouseenter="change" @mouseleave="out"><p :class='{border:hide}' v-if="xianshi">{{please}}</p><p :class='{border:hide}' v-else>{{xuanze}}</p>
                 <div class="box_area" v-if="show">
                     <div class="top">
                         <div class="pro" @click.stop="province" :class='{add:save,whie:have}'>{{prov}}<i class="iconfont icon-jiantou" class="pic"></i></div>
@@ -2145,7 +2145,7 @@ let vue=new Vue({
                     type: 0
                 }],
                 show:false,
-                please:'请选择',
+                please:'',
                 show_prov:true,
                 show_city:false,
                 show_area:false,
@@ -2156,23 +2156,27 @@ let vue=new Vue({
                 areaArr: [],
                 nowindex:0,
                 nowcity_index: '',
-                nowarea_index: '',
-                // chose:true,
                 hide:false,
                 save:true,
                 upload:true,
                 have:false,
-                three:false
+                three:false,
+                xianshi:false,
+                xuanze:"请选择"
             }
         },
-        beforeMount() {
-            this.get();
-        },
+    mounted(){
+        this.get();
+    },
     methods:{
-        get:function(){
-                let date=localStorage.getItem("temp");
-                this.please=date;
-            },
+        get(){
+            let date=localStorage.getItem("ccc");
+            if(this.please=date){
+                this.xianshi=true;
+            }else{
+                this.xianshi=false;
+            }   
+        },
         change(){
             this.show=true;
             this.hide=true;
@@ -2221,6 +2225,7 @@ let vue=new Vue({
                 this.three=true;
             } else {
                 this.area = '';
+                this.xianshi=true;
                 this.please=this.prov+this.city;
                 this.show=false;
                 this.hide=false;
@@ -2234,7 +2239,8 @@ let vue=new Vue({
             this.area=newarea;
             this.nowarea_index=index;
             this.please=this.prov+this.city+this.area;
-            localStorage.setItem("temp",this.please);
+            this.xianshi=true;
+            localStorage.setItem("ccc",this.please);
             this.show=false;
             this.hide=false;
         },
@@ -2257,8 +2263,8 @@ let vue=new Vue({
         }
     },
     watch: {
-            get() {
-                this.get();
+        bianhua() {
+            this.get();
             },
         }  
 })
